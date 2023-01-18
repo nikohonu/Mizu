@@ -15,31 +15,29 @@ script = ExtResource( 2 )
 visible = false
 shape = SubResource( 1 )
 
-[node name="Sprites" type="Node2D" parent="."]
-
-[node name="Status" type="Sprite" parent="Sprites"]
-position = Vector2( 0, -88 )
+[node name="Status" type="Sprite" parent="."]
+z_index = 1
 texture = ExtResource( 4 )
 
+[node name="Sprites" type="Node2D" parent="."]
+
 [node name="Slot4" type="Sprite" parent="Sprites"]
-position = Vector2( 0, -33 )
-scale = Vector2( 1, 1.25 )
+position = Vector2( 0, -47 )
 texture = ExtResource( 3 )
 
 [node name="Slot3" type="Sprite" parent="Sprites"]
-position = Vector2( 0, -3 )
-scale = Vector2( 1, 1.25 )
+position = Vector2( 0, -13 )
 texture = ExtResource( 3 )
 
 [node name="Slot2" type="Sprite" parent="Sprites"]
-position = Vector2( 0, 27 )
-scale = Vector2( 1, 1.25 )
+position = Vector2( 0, 21 )
 texture = ExtResource( 3 )
 
 [node name="Slot1" type="Sprite" parent="Sprites"]
-position = Vector2( 0, 57 )
-scale = Vector2( 1, 1.25 )
+position = Vector2( 0, 55 )
 texture = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Sprites"]
 texture = ExtResource( 1 )
+
+[connection signal="input_event" from="." to="." method="_on_Bottle_input_event"]
