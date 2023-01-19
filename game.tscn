@@ -3,5 +3,6 @@
 [ext_resource path="res://scripts/game.gd" type="Script" id=2]
 
 [node name="Game" type="Node2D"]
+position = Vector2( 0, -1 )
 script = ExtResource( 2 )
-bottle_count = 12
+bottle_count = 15

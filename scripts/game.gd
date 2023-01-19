@@ -26,6 +26,7 @@ func _ready():
 		bottles.append(bottle)
 	generate_map()
 	update()
+	print(map)
 
 
 func generate_map():
@@ -46,7 +47,7 @@ func generate_map():
 					map[i].push_back(value)
 					need[value] += 1
 					break
-
+	map = [[3, 5, 9, 12], [1, 2, 7, 2], [9, 10, 7, 9], [3, 8, 0, 11], [5, 10, 5, 4], [12, 7, 6, 12], [9, 2, 12, 3], [2, 11, 10, 11], [7, 0, 0, 10], [3, 8, 8, 4], [6, 4, 8, 4], [6, 6, 5, 1], [0, 1, 1, 11], [], []]
 
 func update():
 	for i in range(bottle_count):
@@ -111,6 +112,10 @@ func click(num):
 			clear()
 			update()
 			step_count += 1
+		else:
+			current = null
+			clear()
+			return
 		check_win_condition()
 		if win and step_count > 1:
 			step_count = 0
