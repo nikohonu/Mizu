@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://theme.tres" type="Theme" id=1]
+[ext_resource path="res://fonts/NotoSansJP/NotoSansJP-Regular.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/control_top.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+extra_spacing_top = -8
+extra_spacing_bottom = -8
+font_data = ExtResource( 2 )
+
+[node name="ControlTop" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 0.164
+margin_bottom = -104.96
+script = ExtResource( 3 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = -6.0
+
+[node name="Label" type="Label" parent="MarginContainer2"]
+margin_right = 348.0
+margin_bottom = 24.0
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 0.156863, 0.564706, 0.862745, 1 )
+align = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 360.0
+margin_bottom = 54.0
+custom_colors/font_color = Color( 0.156863, 0.564706, 0.862745, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "水"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 58.0
+margin_right = 360.0
+margin_bottom = 82.0
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 0.156863, 0.564706, 0.862745, 1 )
+text = "Mizu"
+align = 1

@@ -9,19 +9,38 @@ onready var sprites = $Sprites
 onready var status_ok = load("res://sprites/ok.png")
 onready var status_wrong = load("res://sprites/wrong.png")
 onready var colors = [
-	Color("#2e3440"),
-	Color("#3b4252"),
-	Color("#4c566a"),
-	Color("#d8dee9"),
-	Color("#8fbcbb"),
-	Color("#88c0d0"),
-	Color("#81a1c1"),
-	Color("#5e81ac"),
-	Color("#bf616a"),
-	Color("#d08770"),
-	Color("#ebcb8b"),
-	Color("#a3be8c"),
-	Color("#b48ead"),
+#	Color("#000000"),
+#	Color("#180d2f"),
+#	Color("#353658"),
+#	Color("#686b72"),
+#	Color("#8b97b6"),
+	Color("#c5cddb"),
+	Color("#ffffff"),
+	Color("#5ee9e9"),
+	Color("#2890dc"),
+	Color("#1831a7"),
+#	Color("#053239"),
+#	Color("#005f41"),
+	Color("#08b23b"),
+#	Color("#47f641"),
+#	Color("#e8ff75"),
+#	Color("#fbbe82"),
+#	Color("#de9751"),
+#	Color("#b66831"),
+	Color("#8a4926"),
+#	Color("#461c14"),
+#	Color("#1e090d"),
+#	Color("#720d0d"),
+#	Color("#813704"),
+	Color("#da2424"),
+	Color("#ef6e10"),
+	Color("#ecab11"),
+	Color("#ece910"),
+	Color("#f78d8d"),
+	Color("#f94e6d"),
+	Color("#c12458"),
+	Color("#841252"),
+	Color("#3d083b"),
 ]
 var number = null
 
@@ -48,9 +67,8 @@ func update():
 			status_sprite.texture = status_ok
 		3: # wrong
 			sprites.position.y = 0
-			status_sprite.texture = status_wrong
 
 
-func _on_Bottle_input_event(viewport, event, shape_idx):
+func _on_Bottle_input_event(_viewport, event, _shape_idx):
 	if (event is InputEventMouseButton && event.pressed):
 		emit_signal("pressed", number)

@@ -141,7 +141,7 @@ if __name__ == "__main__":
                 break
         result = sorted(result, key=lambda x: x.move_count())
         for r in result[:1]:
-            print(r.move, r.map)
+            # print(r.move, r.map)
             r.print_moves()
         if result:
             break
