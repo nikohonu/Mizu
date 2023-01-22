@@ -4,9 +4,6 @@ signal button_restart_pressed
 signal button_undo_pressed
 signal button_back_pressed
 
-func _ready():
-	pass
-	
 
 func hide_buttons():
 	$MarginContainer/HBoxContainer/ButtonRestart.texture_normal = null

@@ -10,12 +10,30 @@ var step_count = 0
 var moves = []
 
 
+onready var bottle_scene = preload("res://bottle.tscn")
+
 
 func _ready():
-	var bottle_scene = preload("res://bottle.tscn")
+	start()
+
+
+func delete_children(node):
+	for n in node.get_children():
+		node.remove_child(n)
+		n.queue_free()
+
+
+func start():
+	# clear
+	delete_children($Node)
+	win = false
+	bottles = []
+	moves = []
+	# start
 	map = Global.maps[Global.current_level].duplicate(true)
 	bottle_count = len(map)
-	var start_y = (get_viewport().size.y/2) - (144 + 6) + ((2 - ((bottle_count - 1) / 5)) * 75)
+	var viewpor = get_viewport().size / get_viewport().size.x * 360
+	var start_y = (viewpor.y/2) - (144 + 6) + ((2 - ((bottle_count - 1) / 5)) * 75)
 	for i in range(bottle_count):
 		var bottle = bottle_scene.instance()
 		var x = i % 5
@@ -26,39 +44,16 @@ func _ready():
 		bottle.connect("pressed", self, "click")
 		$Node.add_child(bottle)
 		bottles.append(bottle)
-	generate_map()
+#	generate_map()
 	update()
 	$ControlTop.set_level(Global.current_level)
-	print(map)
 
-
-func generate_map():
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	map.resize(bottle_count)
-	for i in range(bottle_count):
-		map[i] = []
-	var need = []
-	var color_count = bottle_count - 2
-	need.resize(color_count)
-	need.fill(0)
-	for i in range(color_count):
-		for _j in range(4):
-			while true:
-				var value = rng.randi_range(0, color_count - 1) # (0, 1, 2) = 3
-				if need[value] < 4:
-					map[i].push_back(value)
-					need[value] += 1
-					break
-	map = Global.maps[Global.current_level].duplicate(true)
-#	map = [[3, 5, 9, 12], [1, 2, 7, 2], [9, 10, 7, 9], [3, 8, 0, 11], [5, 10, 5, 4], [12, 7, 6, 12], [9, 2, 12, 3], [2, 11, 10, 11], [7, 0, 0, 10], [3, 8, 8, 4], [6, 4, 8, 4], [6, 6, 5, 1], [0, 1, 1, 11], [], []]
 
 func update():
 	for i in range(bottle_count):
 		bottles[i].number = i
 		bottles[i].states = map[i]
 		bottles[i].update()
-
 
 
 func check_status(column, water):
@@ -81,13 +76,17 @@ func pour(column_from: Array, column_to:  Array):
 				break
 	else:
 		count = 1
+	var return_count = 0
 	while count > 0 and len(column_to) < 4:
 		count -= 1
+		return_count += 1
 		column_to.push_back(column_from.pop_back())
+	return return_count
 
 func unselect():
 	current = null
 	clear()
+
 
 func click(num):
 	if win and step_count > 1:
@@ -113,8 +112,7 @@ func click(num):
 			return
 		var water = map[current][-1]
 		if check_status(map[num], water):
-			pour(map[current], map[num])
-			moves.push_back([current, num])
+			moves.push_back([current, num, pour(map[current], map[num])])
 			unselect()
 			update()
 			step_count += 1
@@ -123,39 +121,60 @@ func click(num):
 			self.click(num)
 			return
 		check_win_condition()
-		if win and step_count > 1:
-			step_count = 0
-			win = false
-			generate_map()
-			update()
-	print(moves)
+		if win:
+			if Global.current_level < 25:
+				if not Global.current_level in Global.cleared_level:
+					Global.cleared_level.push_back(Global.current_level)
+					Global.save_game()
+				Global.current_level += 1
+				if Global.current_level == 25:
+					get_tree().change_scene("res://menu.tscn")
+				else:
+					start()
 
+
+func is_all_same(col):
+	var element = col[0]
+	var result = true
+	for i in range(len(col)):
+		if col[i] != element:
+			result = false
+	return result
+	
 
 func check_win_condition():
 	win = true
-	for i in range(bottle_count):
+	for i in range(len(map)):
 		if len(map[i]) != 0 and len(map[i]) != 4:
 			win = false
+		if len(map[i]) == 4 and not is_all_same(map[i]):
+			win = false
+	return win
+
 
 
 func sleep(sec):
 	yield(get_tree().create_timer(sec), "timeout")
-	
+
 
 func _on_ControlButtons_button_back_pressed():
 	get_tree().change_scene("res://levels.tscn")
 
 
 func _on_ControlButtons_button_restart_pressed():
-	generate_map()
-	update()
+	start()
 
 
 func _on_ControlButtons_button_undo_pressed():
 	unselect()
 	var move = moves.pop_back()
 	if move:
-		pour(map[move[1]], map[move[0]])
+		var column_from = map[move[1]]
+		var column_to = map[move[0]]
+		var count = move[2]
+		while count > 0:
+			count -= 1
+			column_to.push_back(column_from.pop_back())
 		sleep(1)
-		print(map)
 		update()
+

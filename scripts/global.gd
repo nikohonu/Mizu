@@ -27,5 +27,27 @@ var maps = [
 	[[12, 12, 3, 3], [8, 8, 1, 10], [10, 9, 12, 7], [2, 5, 11, 9], [8, 6, 2, 8], [5, 6, 1, 9], [4, 12, 5, 1], [0, 4, 7, 1], [10, 7, 0, 7], [9, 4, 2, 5], [10, 2, 6, 11], [11, 6, 3, 4], [0, 11, 0, 3], [], []], # 24
 	[[5, 11, 9, 1], [10, 11, 11, 0], [4, 1, 7, 6], [11, 9, 1, 3], [3, 4, 5, 7], [1, 5, 9, 0], [6, 10, 6, 12], [10, 9, 2, 12], [10, 3, 5, 0], [2, 2, 0, 12], [8, 8, 4, 6], [2, 3, 12, 4], [8, 7, 8, 7], [], []], # 25	
 ]
-
 var current_level = 1
+var cleared_level
+
+
+func _ready():
+	cleared_level = load_game()
+	print(cleared_level)
+
+
+func save_game():
+	var save_game = File.new()
+	save_game.open("user://savegame.save", File.WRITE)
+	save_game.store_line(to_json(cleared_level))
+	save_game.close()
+
+
+func load_game():
+	var save_game = File.new()
+	if not save_game.file_exists("user://savegame.save"):
+		return []
+	save_game.open("user://savegame.save", File.READ)
+	var result = parse_json(save_game.get_line())
+	save_game.close() 
+	return result
