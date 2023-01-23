@@ -2,12 +2,11 @@ extends TextureButton
 
 var level
 onready var label = $Label
-onready var font = preload("res://fonts/cleared_level.tres")
 signal start_level(level)
 
 
 func set_level_cleared():
-	$Label.add_color_override("font_color", Color("#fbbe82"))
+	$Label.add_color_override("font_color", Color("#FFEC27"))
 
 
 func _ready():

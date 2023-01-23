@@ -8,12 +8,14 @@ var current = null
 var win = false
 var step_count = 0
 var moves = []
+onready var pour_sounds = [$"Pour sounds/AudioStreamPlayer", $"Pour sounds/AudioStreamPlayer2", $"Pour sounds/AudioStreamPlayer3"]
 
 
 onready var bottle_scene = preload("res://bottle.tscn")
 
 
 func _ready():
+	randomize()
 	start()
 
 
@@ -81,6 +83,9 @@ func pour(column_from: Array, column_to:  Array):
 		count -= 1
 		return_count += 1
 		column_to.push_back(column_from.pop_back())
+	var rand_pour_sound = pour_sounds[randi() % pour_sounds.size()]
+	rand_pour_sound.stream.loop = false
+	rand_pour_sound.play()
 	return return_count
 
 func unselect():
@@ -122,6 +127,7 @@ func click(num):
 			return
 		check_win_condition()
 		if win:
+			$"Win sound".play()
 			if Global.current_level < 25:
 				if not Global.current_level in Global.cleared_level:
 					Global.cleared_level.push_back(Global.current_level)

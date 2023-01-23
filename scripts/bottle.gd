@@ -9,21 +9,19 @@ onready var sprites = $Sprites
 onready var status_ok = load("res://sprites/ok.png")
 onready var status_wrong = load("res://sprites/wrong.png")
 onready var colors = [
-	Color("#da2424"),
-	Color("#1831a7"),
-	Color("#ef6e10"),
-	Color("#ffffff"),
-	Color("#08b23b"),
-	Color("#c12458"),
-	Color("#f94e6d"),
-	Color("#ece910"),
-	Color("#5ee9e9"),
-	Color("#ecab11"),
-	Color("#841252"),
-	Color("#2890dc"),
-	Color("#8a4926"),
-	Color("#c5cddb"),
-	Color("#f78d8d"),
+	Color("#FF004D"),
+	Color("#29ADFF"),
+	Color("#00E436"),
+	Color("#7E2553"),
+	Color("#008751"),
+	Color("#AB5236"),
+	Color("#5F574F"),
+	Color("#FFF1E8"),
+	Color("#FFA300"),
+	Color("#FFEC27"),
+	Color("#FF77A8"),
+	Color("#FFCCAA"),
+	Color("#d377ff"),
 ]
 var number = null
 

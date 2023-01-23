@@ -1,6 +1,7 @@
 import copy
 import random
 from itertools import repeat
+import sys
 
 
 class Node:
@@ -8,7 +9,7 @@ class Node:
         if map:
             self.map = copy.deepcopy(map)
         else:
-            self.map = self.generate_map(15)
+            self.map = self.generate_map(int(sys.argv[1]))
         self.move = move
         self.children = []
         self.parent = parent
@@ -72,11 +73,16 @@ class Node:
     def print_moves(self):
         moves = []
         node = self
+        count = 0
         while node:
             moves.insert(0, (node.move, node.map))
+            if node.parent == None:
+                print(node.map, ", #", count, sep="")
             node = node.parent
+            count += 1
         for m in moves:
-            print(m[0], m[1])
+            # print(m[0], m[1])
+            pass
 
     def move_count(self):
         moves = []
@@ -146,4 +152,4 @@ if __name__ == "__main__":
         if result:
             break
         tries += 1
-        print(tries)
+        # print(tries)
